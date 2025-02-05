@@ -1,4 +1,6 @@
 import {
+  DeleteObjectCommand,
+  GetObjectCommand,
   ListObjectsCommand,
   PutObjectCommand,
   S3Client,
@@ -25,6 +27,17 @@ export const findTrainers = async () => {
 
 /** トレーナーの取得 */
 // TODO: トレーナーを取得する S3 クライアント処理の実装
+export const findTrainer = async (name) => {
+  const object = await s3Client.send(
+    new GetObjectCommand({
+      Bucket: config.bucketName,
+      Key: `${name}.json`,
+    }),
+  );
+
+  const trainer = JSON.parse(await object.Body.transformToString());
+  return trainer;
+};
 
 /** トレーナーの追加更新 */
 export const upsertTrainer = async (name, trainer) => {
@@ -40,3 +53,12 @@ export const upsertTrainer = async (name, trainer) => {
 
 /** トレーナーの削除 */
 // TODO: トレーナーを削除する S3 クライアント処理の実装
+export const deleteTrainer = async (name) => {
+  const result = await s3Client.send(
+    new DeleteObjectCommand({
+      Bucket: config.bucketName,
+      Key: `${name}.json`,
+    }),
+  );
+  return result;
+};
