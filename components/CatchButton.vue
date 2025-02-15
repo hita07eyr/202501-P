@@ -17,6 +17,12 @@ defineProps({
 </template>
 
 <style scoped>
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(720deg); }
+}
+ 
 .catch-button {
   position: relative;
   line-height: 1;
@@ -30,12 +36,12 @@ defineProps({
   text-decoration: none;
 }
 .catch-button:hover {
-  transform: translate(-1px, -1px);
+  transform: translate(-5px, -5px);
   box-shadow: 1px 1px 0 #555;
   color: #fff;
 }
 .catch-button:active {
-  transform: translate(1px, 1px);
+  transform: translate(5px, 5px);
   box-shadow: none;
 }
 .catch-button .pokemon-ball {
@@ -44,8 +50,8 @@ defineProps({
 }
 
 .catch-button:hover .pokemon-ball {
-  animation: bounce;
-  animation-duration: 0.8s;
+  animation: rotate;
+  animation-duration: 2.0s;
 }
 
 .catch-button::before {

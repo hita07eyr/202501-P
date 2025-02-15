@@ -22,7 +22,7 @@ export const findTrainers = async () => {
   const objects = await s3Client.send(
     new ListObjectsCommand({ Bucket: config.bucketName }),
   );
-  return objects.Contents ?? [];
+  return objects.Contents ?? []; //「nullish coalescing operator」
 };
 
 /** トレーナーの取得 */

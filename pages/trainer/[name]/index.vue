@@ -73,12 +73,18 @@ const {
       <span>{{ trainer.name }}</span>
     </div>
     <GamifyButton @click="onOpenDelete(true)"
-      >マサラタウンにかえる</GamifyButton
-    >
+      >ポケモン集めをやめる</GamifyButton>
+    
+    <CatchButton :to="`/trainer`"
+    >今日のポケモン集めは終了</CatchButton>
+
     <h2>てもちポケモン</h2>
     <CatchButton :to="`/trainer/${route.params.name}/catch`"
       >ポケモンをつかまえる</CatchButton
     >
+    <CatchButton :to="`/trainer`"
+    >今日のポケモン集めは終了</CatchButton>
+
     <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
@@ -95,7 +101,7 @@ const {
       v-if="deleteDialog"
       id="confirm-delete"
       title="かくにん"
-      description="ほんとうに　マサラタウンに　かえるんだな！　この　そうさは　とりけせないぞ！"
+      description="ほんとうに　はかせに　おくるんだな！　この　そうさは　とりけせないぞ！"
       @close="onCloseDelete"
     >
       <GamifyList :border="false" direction="horizon">
