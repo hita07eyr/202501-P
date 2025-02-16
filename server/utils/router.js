@@ -6,6 +6,8 @@ import {
   findTrainer,
  } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
+import { findTenkis } from "~/server/utils/tenki";
+//import Tenkis from "~/pages/tenkis.vue";
 
 const router = Router();
 
@@ -134,5 +136,99 @@ router.delete(
     }
   },
 );
+
+
+//router.post("/trainer/:trainerName/pokemon", async (req, res, next) => {
+/** 天気の取得 */
+/*
+router.get("/tenkis", async (req, res, next) => {
+  try {
+    const { areaCode } = req.params;
+    const tenki = await findTenki(areaCode);
+    //const pokemon = await findPokemon(req.body.name);
+    //res.status(result["$metadata"].httpStatusCode).send(tenki);
+    res.send(tenki);
+
+  } catch (err) {
+    next(err);
+  }
+});
+*/
+/** 天気一覧の取得 */
+router.get("/tenkis", async (_req, res, next) => {
+  try {
+    const tenkis = await findTenkis();
+    // TODO: 期待するレスポンスボディに変更する
+    //const SiikuinNames = trainers.map(({Key}) => Key.replace(/\.json$/,""));
+    //const SiikuinNames = trainers.map(({Key}) => Key);
+    //const response = tenkis.map((siikuin)=>siikuin.Key.split(".")[0])
+/*
+    // 必要な情報を抽出
+    const response = tenkis.map(({timeSeries}) => {
+      const weatherInfo = timeSeries[0].areas[0].weathers[0];
+      const areaInfo = timeSeries[0].areas[0].area.name;
+      const timeInfo = timeSeries[0].timeDefines[0];
+      return {
+        area:areaInfo,
+        time:timeInfo,
+        weather: weatherInfo
+      };
+  });
+*/
+/*
+    // 必要な情報を抽出
+    const response = tenkis.map(({ publishingOffice, reportDatetime, timeSeries }) => {
+      if (timeSeries && timeSeries.length > 0) {
+        const areaInfo = timeSeries[0].areas[0].area.name;
+        const timeInfo = timeSeries[0].timeDefines[0];
+        const weatherInfo = timeSeries[0].areas[0].weathers[0];
+        return {
+          publishingOffice,
+          reportDatetime,
+          area: areaInfo,
+          time: timeInfo,
+          weather: weatherInfo
+        };
+      } else {
+        return {
+          publishingOffice,
+          reportDatetime,
+          area: null,
+          time: null,
+          weather: null
+        };
+      }
+    });
+    res.send(response);
+*/
+    // 必要な情報を抽出
+    const response = tenkis.map(({ publishingOffice, timeSeries }) => {
+      if (timeSeries && timeSeries.length > 0 && timeSeries[0].areas && timeSeries[0].areas.length > 0) {
+        const areaInfo = timeSeries[0].areas[0].area?.name || "N/A";
+        const timeInfo = timeSeries[0].timeDefines?.[0] || "N/A";
+        const weatherInfo = timeSeries[0].areas[0].weathers?.[0] || "N/A";
+        return {
+          publishingOffice,
+          area: areaInfo,
+          time: timeInfo,
+          weather: weatherInfo
+        };
+      } else {
+        return {
+          publishingOffice,
+          area: "N/A",
+          time: "N/A",
+          weather: "N/A"
+        };
+      }
+    });
+    res.send(response[0]);
+    
+    
+//    res.send(tenkis);
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default router;
