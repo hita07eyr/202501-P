@@ -6,7 +6,7 @@ import {
   findTrainer,
  } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
-import { findTenkis } from "~/server/utils/tenki";
+import { findTenkis} from "~/server/utils/tenki";
 //import Tenkis from "~/pages/tenkis.vue";
 
 const router = Router();

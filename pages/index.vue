@@ -13,6 +13,9 @@
       <GamifyItem>
         <NuxtLink to="/tenkis">天気を調べる</NuxtLink>
       </GamifyItem>
+      <GamifyItem>
+        <NuxtLink to="/code">コードで天気を調べる</NuxtLink>
+      </GamifyItem>
     </GamifyList>
   </div>
 </template>

@@ -1,27 +1,6 @@
 <script setup>
 import Tenkis from './tenkis.vue';
 
-//const route = useRoute();
-//const router = useRouter();
-//const config = useRuntimeConfig();
-/*
-const { data: trainer, refresh } = await useFetch(
-  () => `/api/trainer/${route.params.name}`,
-  {
-    default: () => [],
-    server: false,
-    baseUrl: config.public.backendOrigin,
-  },
-);
-*/
-/*
-const nickname = ref("");
-const {
-  dialog: releaseDialog,
-  onOpen: onOpenRelease,
-  onClose: onCloseRelease,
-} = useDialog();
-*/
 </script>
 
 <template>
@@ -30,7 +9,7 @@ const {
     <div class="tenki-info">
       <span>{{ Tenkis.name }}</span>
     </div>
-  </div>
+</div>
 </template>
 
 <style scoped>

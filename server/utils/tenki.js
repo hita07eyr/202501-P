@@ -16,9 +16,10 @@ export const findTenkis = async () => {
   const tenki = await ofetch(`https://www.jma.go.jp/bosai/forecast/data/forecast/270000.json`, {
 ///const pokemon = await ofetch(`https://pokeapi.co/api/v2/pokemon/${name}`, {
 
-      
 
-    agent,
+
+agent,
   });
   return tenki;
 };
+
