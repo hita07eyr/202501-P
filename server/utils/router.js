@@ -6,7 +6,7 @@ import {
   findTrainer,
  } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
-import { findTenkis} from "~/server/utils/tenki";
+import { findTenkis,upsertTenki,findTenkiCodes} from "~/server/utils/tenki";
 //import Tenkis from "~/pages/tenkis.vue";
 
 const router = Router();
@@ -230,5 +230,30 @@ router.get("/tenkis", async (_req, res, next) => {
     next(err);
   }
 });
+
+/** 天気コードの追加 */
+router.post("/tenki", async (req, res, next) => {
+  try {
+    const result = await upsertTenki(req.body.name, req.body);
+    res.status(result["$metadata"].httpStatusCode).send(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/** 登録天気コードの一覧取得 */
+router.get("/tenkiCodes", async (_req, res, next) => {
+  try {
+    const tenkiCodes = await findTenkiCodes();
+    // TODO: 期待するレスポンスボディに変更する
+    //const SiikuinNames = trainers.map(({Key}) => Key.replace(/\.json$/,""));
+    //const SiikuinNames = trainers.map(({Key}) => Key);
+    const response = tenkiCodes.map((siikuin)=>siikuin.Key.split(".")[0])
+    res.send(response);
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 export default router;

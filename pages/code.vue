@@ -1,6 +1,6 @@
 <script setup>
 const router = useRouter();
-//const config = useRuntimeConfig();
+const config = useRuntimeConfig();
 const tenkiCode = ref("");
 const valid = computed(() => tenkiCode.value.length > 0);
 /*
@@ -21,29 +21,38 @@ const onSubmit = async () => {
 };
 
 */
-/*
+
 const onSubmit = async () => {
-  const response = await $fetch("/api/trainer", {
-    baseURL: config.public.backendOrigin,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: tenkiCode.value,
-    }),
-  }).catch((e) => e);
-  if (response instanceof Error) return;
+  try{
+    const response = await $fetch("/api/tenki", {
+      baseURL: config.public.backendOrigin,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: tenkiCode.value,
+      }),
+    });
+    console.log('APIレスポンス:', response); // 追加
+    if (response instanceof Error) 
+    {
+        console.error('Error:', response);
+        return;
+    }
+    router.push(`/tenki/`);
+  } catch (error) {
+    console.error('Failed to fetch:', error);
+  }
+};
+
+
+const { dialog, onOpen, onClose } = useDialog();
+/*
+const onClose = async () => {
   router.push(`/tenki`);
 };
 */
-
-const { dialog, onOpen, onClose } = useDialog();
-
-const onOK = async () => {
-  router.push(`/tenki`);
-};
-
 </script>
 
 <template>
@@ -60,9 +69,9 @@ const onOK = async () => {
         />
       </div>
       <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
-        >けってい</GamifyButton>
+        >けってい
+      </GamifyButton>
     </form>
-    /*
     <GamifyDialog
       v-if="dialog"
       id="confirm-submit"
@@ -75,11 +84,16 @@ const onOK = async () => {
           <GamifyButton @click="onClose">いいえ</GamifyButton>
         </GamifyItem>
         <GamifyItem>
-          <GamifyButton @click="onOK">はい</GamifyButton>
+          <GamifyButton @click="onSubmit">はい</GamifyButton>
         </GamifyItem>
       </GamifyList>
     </GamifyDialog>  
-  </div>
+
+    <GamifyItem>
+        <NuxtLink to="/tenki">登録コード一覧</NuxtLink>
+    </GamifyItem>
+
+</div>
 </template>
 
 
