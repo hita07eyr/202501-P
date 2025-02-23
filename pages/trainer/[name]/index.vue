@@ -82,9 +82,6 @@ const {
     <CatchButton :to="`/trainer/${route.params.name}/catch`"
       >ポケモンをつかまえる</CatchButton
     >
-    <CatchButton :to="`/trainer`"
-    >今日のポケモン集めは終了</CatchButton>
-
     <GamifyList>
       <GamifyItem v-for="pokemon in trainer.pokemons" :key="pokemon.id">
         <img :src="pokemon.sprites.front_default" />
