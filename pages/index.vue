@@ -11,7 +11,7 @@
         <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
       </GamifyItem>
       <GamifyItem>
-        <NuxtLink to="/tenkis">大阪の天気を調べる</NuxtLink>
+        <NuxtLink to="/o-tenki">大阪の天気を調べる</NuxtLink>
       </GamifyItem>
       <GamifyItem>
         <NuxtLink to="/code">コードで天気を調べる</NuxtLink>
