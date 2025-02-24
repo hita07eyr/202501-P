@@ -1,7 +1,6 @@
 import { ProxyAgent } from "proxy-agent";
 import { ofetch } from "ofetch";
-import {PutObjectCommand, ListObjectsCommand,GetObjectCommand,
-} from "@aws-sdk/client-s3";
+import {PutObjectCommand, ListObjectsCommand,GetObjectCommand,DeleteObjectCommand} from "@aws-sdk/client-s3";
 import s3Client from './s3Client';
 const config = useRuntimeConfig();
 
@@ -57,4 +56,16 @@ export const findTenkiCode = async (name) => {
 
   const TenkiCode = JSON.parse(await object.Body.transformToString());
   return TenkiCode;
+};
+
+/** 登録地点の削除取得 */
+export const deletetenkiCode = async (name) => {
+  //console.log("[deletetenkiCode]:", name); // 確認用ログ
+  const result = await s3Client.send(
+    new DeleteObjectCommand({
+      Bucket: "km202501-13182",
+      Key: `${name}.json`,
+    }),
+  );
+  return result;
 };

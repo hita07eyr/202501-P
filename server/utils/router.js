@@ -6,7 +6,7 @@ import {
   findTrainer,
  } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
-import { findTenkis,findTenkiCode,findTenkiCodes,findTenki} from "~/server/utils/tenki";
+import { findTenkis,findTenkiCode,findTenkiCodes,findTenki,deletetenkiCode} from "~/server/utils/tenki";
 
 const router = Router();
 
@@ -198,7 +198,7 @@ router.get("/tenkiCodes", async (_req, res, next) => {
 router.get("/Code/:tenkiCode", async (req, res, next) => {
   try {
     const { tenkiCode } = req.params;
-    console.log("リクエストされた天気コード:", tenkiCode); // 確認用ログ
+    //console.log("リクエストされた天気コード:", tenkiCode); // 確認用ログ
     const tenkiData = await findTenki(tenkiCode);
     const tenkiCodeData = await findTenkiCode(tenkiCode);
 
@@ -210,5 +210,18 @@ router.get("/Code/:tenkiCode", async (req, res, next) => {
     next(err);
   }
 });
+
+/** 登録地点の削除 */
+router.delete("/Code/:tenkiCode", async (req, res, next) => {
+  try {
+    const { tenkiCode } = req.params;
+    console.log("削除要望するリクエストコード:", tenkiCode); // 確認用ログ
+    const result = await deletetenkiCode(tenkiCode);
+    res.status(result["$metadata"].httpStatusCode).send(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 export default router;

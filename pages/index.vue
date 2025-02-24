@@ -11,7 +11,7 @@
         <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
       </GamifyItem>
     </GamifyList>
-    <h1>天気予報</h1>
+    <h1>今日・明日・明後日の天気予報</h1>
     <GamifyList>
       <GamifyItem>
         <NuxtLink to="/o-tenki">大阪の天気を調べる</NuxtLink>

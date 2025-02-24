@@ -51,6 +51,14 @@ const formatDate = (isoDate) => {
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours()}時`;
 };
 
+const onDelete = async () => {
+  const response = await $fetch(`/api/code/${route.params.name}`, {
+    baseURL: config.public.backendOrigin,
+    method: "DELETE",
+  }).catch((e) => e);
+  if (response instanceof Error) return;
+};
+
 </script>
 
 <template>
@@ -84,7 +92,8 @@ const formatDate = (isoDate) => {
         </tbody>
       </table>
     </div>
-    <CatchButton :to="`/Code`">お天気情報確認終了</CatchButton>
+    <CatchButton :to="`/Code`">天気予報 確認終了</CatchButton>
+    <CatchButton  @click="onDelete" :to="`/`">登録削除</CatchButton>
   </div>
 </template>
 

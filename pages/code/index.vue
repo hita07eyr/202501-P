@@ -21,28 +21,42 @@ const onSubmit = async () => {
   router.push(`/`);
 };
 
+const valid = computed(() => {
+  const code = Number(CodeName.value); // 数値に変換
+  return (
+    CodeName.value.length > 0 &&
+    !isNaN(code) &&
+    code >= 100000 &&
+    code <= 450000 &&
+    code % 10000 === 0
+  );
+});
+
+
 </script>
 
 <template>
   <div>
-    <h1>登録コード（場所）一覧</h1>
+    <h1>登録地点（コード）一覧</h1>
     <GamifyList>
       <GamifyItem v-for="code in codes" :key="code">
         <NuxtLink :to="`/code/${code}`">{{ code }}</NuxtLink>
       </GamifyItem>
     </GamifyList>
 
-    <h2>登録コード（場所） 新規登録</h2>
+    <h2>登録地点追加</h2>
     <form @submit.prevent>
       <div class="item">
-        <P>コード 10～47</P>
+        <P>コードを入力してください</P>
+        <P>（100000～450000）※ 10000単位に限定</P>
+        <P>＜例＞群馬県：100000、東京都：130000、宮崎県：450000</P>
         <input
           id="name"
           v-model="CodeName"
           @keydown.enter="valid && onOpen(true)"
-        /><P>0000</P>
+        />
       </div>
-      <GamifyButton type="button" @click="onSubmit">決定</GamifyButton>
+      <GamifyButton type="button" :disabled="!valid" @click="onSubmit">登録</GamifyButton>
     </form>
     <CatchButton :to="`/`">メニューに戻る</CatchButton>
   </div>
