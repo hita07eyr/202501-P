@@ -10,11 +10,14 @@
       <GamifyItem>
         <NuxtLink to="/new">あたらしくはじめる</NuxtLink>
       </GamifyItem>
+    </GamifyList>
+    <h1>天気予報</h1>
+    <GamifyList>
       <GamifyItem>
         <NuxtLink to="/o-tenki">大阪の天気を調べる</NuxtLink>
       </GamifyItem>
       <GamifyItem>
-        <NuxtLink to="/code">コードで天気を調べる</NuxtLink>
+        <NuxtLink to="/code">登録地点の天気を調べる</NuxtLink>
       </GamifyItem>
     </GamifyList>
   </div>

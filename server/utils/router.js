@@ -6,8 +6,7 @@ import {
   findTrainer,
  } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
-import { findTenkis,upsertTenki,findTenkiCodes} from "~/server/utils/tenki";
-//import Tenkis from "~/pages/tenkis.vue";
+import { findTenkis,findTenkiCode,findTenkiCodes,findTenki} from "~/server/utils/tenki";
 
 const router = Router();
 
@@ -137,70 +136,12 @@ router.delete(
   },
 );
 
-
-//router.post("/trainer/:trainerName/pokemon", async (req, res, next) => {
-/** 天気の取得 */
-/*
-router.get("/tenkis", async (req, res, next) => {
+/** 大阪の天気取得 */
+router.get("/o-tenki", async (_req, res, next) => {
   try {
-    const { areaCode } = req.params;
-    const tenki = await findTenki(areaCode);
-    //const pokemon = await findPokemon(req.body.name);
-    //res.status(result["$metadata"].httpStatusCode).send(tenki);
-    res.send(tenki);
 
-  } catch (err) {
-    next(err);
-  }
-});
-*/
-/** 天気一覧の取得 */
-router.get("/tenkis", async (_req, res, next) => {
-  try {
     const tenkis = await findTenkis();
-    // TODO: 期待するレスポンスボディに変更する
-    //const SiikuinNames = trainers.map(({Key}) => Key.replace(/\.json$/,""));
-    //const SiikuinNames = trainers.map(({Key}) => Key);
-    //const response = tenkis.map((siikuin)=>siikuin.Key.split(".")[0])
-/*
-    // 必要な情報を抽出
-    const response = tenkis.map(({timeSeries}) => {
-      const weatherInfo = timeSeries[0].areas[0].weathers[0];
-      const areaInfo = timeSeries[0].areas[0].area.name;
-      const timeInfo = timeSeries[0].timeDefines[0];
-      return {
-        area:areaInfo,
-        time:timeInfo,
-        weather: weatherInfo
-      };
-  });
-*/
-/*
-    // 必要な情報を抽出
-    const response = tenkis.map(({ publishingOffice, reportDatetime, timeSeries }) => {
-      if (timeSeries && timeSeries.length > 0) {
-        const areaInfo = timeSeries[0].areas[0].area.name;
-        const timeInfo = timeSeries[0].timeDefines[0];
-        const weatherInfo = timeSeries[0].areas[0].weathers[0];
-        return {
-          publishingOffice,
-          reportDatetime,
-          area: areaInfo,
-          time: timeInfo,
-          weather: weatherInfo
-        };
-      } else {
-        return {
-          publishingOffice,
-          reportDatetime,
-          area: null,
-          time: null,
-          weather: null
-        };
-      }
-    });
-    res.send(response);
-*/
+
     // 必要な情報を抽出
     const response = tenkis.map(({ publishingOffice, timeSeries }) => {
       if (timeSeries && timeSeries.length > 0 && timeSeries[0].areas && timeSeries[0].areas.length > 0) {
@@ -223,37 +164,50 @@ router.get("/tenkis", async (_req, res, next) => {
       }
     });
     res.send(response[0]);
-    
-    
-//    res.send(tenkis);
   } catch (err) {
     next(err);
   }
 });
 
+
 /** 天気コードの追加 */
-router.post("/tenki", async (req, res, next) => {
+router.post("/tenkiCode", async (req, res, next) => {
   try {
-    const result = await upsertTenki(req.body.name, req.body);
+    const result = await upsertTenkiCode(req.body.name, req.body);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {
     next(err);
   }
 });
 
-/** 登録天気コードの一覧取得 */
+/** 登録済み天気コード一覧の取得 */
 router.get("/tenkiCodes", async (_req, res, next) => {
+
   try {
     const tenkiCodes = await findTenkiCodes();
-    // TODO: 期待するレスポンスボディに変更する
-    //const SiikuinNames = trainers.map(({Key}) => Key.replace(/\.json$/,""));
-    //const SiikuinNames = trainers.map(({Key}) => Key);
-    const response = tenkiCodes.map((siikuin)=>siikuin.Key.split(".")[0])
+    const response = tenkiCodes.map(({Key}) => Key.replace(/\.json$/,""));
+    //const response = tenkiCodes.map((tenki)=>tenki.Key.split(".")[0])
     res.send(response);
   } catch (err) {
     next(err);
   }
 });
 
+/** 天気情報の取得 */
+router.get("/Code/:tenkiCode", async (req, res, next) => {
+  try {
+    const { tenkiCode } = req.params;
+    console.log("リクエストされた天気コード:", tenkiCode); // 確認用ログ
+    const tenkiData = await findTenki(tenkiCode);
+    const tenkiCodeData = await findTenkiCode(tenkiCode);
+
+    if (!tenkiCodeData) {
+      return res.status(404).json({ error: "該当する天気情報が見つかりません" });
+    }
+    res.send(tenkiCodeData);
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default router;

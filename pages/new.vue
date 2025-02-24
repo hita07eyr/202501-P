@@ -41,6 +41,7 @@ const { dialog, onOpen, onClose } = useDialog();
       <GamifyButton type="button" :disabled="!valid" @click="onOpen(true)"
         >けってい</GamifyButton>
     </form>
+    <CatchButton :to="`/`">メニューに戻る</CatchButton>
     <GamifyDialog
       v-if="dialog"
       id="confirm-submit"

@@ -94,6 +94,7 @@ const {
         >
       </GamifyItem>
     </GamifyList>
+    <CatchButton :to="`/`">メニューに戻る</CatchButton>
     <GamifyDialog
       v-if="deleteDialog"
       id="confirm-delete"

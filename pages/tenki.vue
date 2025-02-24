@@ -1,17 +1,15 @@
 <script setup>
-//import Tenkis from './tenkis.vue';
-const { data: tenkiCodes } = await useTenkiCodes();
-console.log('取得した天気コード:', tenkiCodes);  // レスポンスを確認
+import Tenkis from './o-tenki.vue';
+
 </script>
 
 <template>
   <div>
     <h1>お天気情報</h1>
-
-    <GamifyItem v-for="tenkiCode in tenkiCodes || []" :key="tenkiCode">
-      <NuxtLink :to="`/tenki/${tenkiCode}`">{{ tenkiCode }}</NuxtLink>
-    </GamifyItem>
-  </div>
+    <div class="tenki-info">
+      <span>{{ Tenkis.name }}</span>
+    </div>
+</div>
 </template>
 
 <style scoped>

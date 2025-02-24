@@ -1,30 +1,5 @@
 <script setup>
-//const router = useRouter();
-//const config = useRuntimeConfig();
-//const areaCode = ref("");
-//const safeareaCode = computed(() => trimAvoidCharacters(areaCode.value));
-//const valid = computed(() => safeareaCode.value.length > 0);
-
-/*
- const onSubmit = async () => {
-  const response = await $fetch("/api/tenki", {
-    baseURL: config.public.backendOrigin,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: safeareaCode.value,
-    }),
-  }).catch((e) => e);
-  if (response instanceof Error) return;
- router.push(`/tenki/`);
-};
-const { dialog, onOpen, onClose } = useDialog();
-const { data: Tenkis } = await useTenkis();
-*/
-const { data: Tenkis } = await useTenkis();
-
+const { data: Tenkis } = await useOTenki();
 </script>
 
 <template>
