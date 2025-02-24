@@ -185,8 +185,9 @@ router.get("/tenkiCodes", async (_req, res, next) => {
 
   try {
     const tenkiCodes = await findTenkiCodes();
-    const response = tenkiCodes.map(({Key}) => Key.replace(/\.json$/,""));
-    //const response = tenkiCodes.map((tenki)=>tenki.Key.split(".")[0])
+    const response = tenkiCodes
+    .filter(({Key}) => Key.endsWith(".json"))
+    .map(({Key}) => Key.replace(/\.json$/,""));
     res.send(response);
   } catch (err) {
     next(err);
