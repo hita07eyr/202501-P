@@ -1,17 +1,15 @@
 import { ProxyAgent } from "proxy-agent";
 import { ofetch } from "ofetch";
-import {PutObjectCommand, ListObjectsCommand,GetObjectCommand,DeleteObjectCommand} from "@aws-sdk/client-s3";
-import s3Client from './s3Client';
+import {PutObjectCommand, ListObjectsCommand,GetObjectCommand,DeleteObjectCommand,S3Client,} from "@aws-sdk/client-s3";
+import {s3Client,agent} from "~/server/utils/trainer";
 const config = useRuntimeConfig();
-
-/** const agent = new ProxyAgent(); **/
-const agent = new ProxyAgent({requestTls:{rejectUnauthorized:false}});
-
 
 /** 大阪の天気情報取得 */
 export const findTenkis = async () => {
   const tenki = await ofetch(`https://www.jma.go.jp/bosai/forecast/data/forecast/270000.json`, {
-  agent,
+  //const tenki = await ofetch(`http://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json`, {
+    https:
+    agent,
   });
   return tenki;
 };

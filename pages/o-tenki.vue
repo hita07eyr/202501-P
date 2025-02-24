@@ -7,7 +7,7 @@ const { data: Tenkis } = await useOTenki();
     <h1>大阪の天気</h1>
     <GamifyList>
       <GamifyItem v-for="tenki in Tenkis" :key="tenki">
-        <NuxtLink :to="`/tenki`">{{ tenki }}</NuxtLink>
+        {{ tenki }}
       </GamifyItem>
     </GamifyList>
     <CatchButton :to="`/`">メニューに戻る</CatchButton>

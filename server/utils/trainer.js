@@ -3,21 +3,20 @@ import {
   GetObjectCommand,
   ListObjectsCommand,
   PutObjectCommand,
-//  S3Client,
+  S3Client,
 } from "@aws-sdk/client-s3";
-import s3Client from './s3Client';
-//import { NodeHttpHandler } from "@aws-sdk/node-http-handler";
-//import { ProxyAgent } from "proxy-agent";
+import { NodeHttpHandler } from "@aws-sdk/node-http-handler";
+import { ProxyAgent } from "proxy-agent";
 
 const config = useRuntimeConfig();
 
-//const agent = new ProxyAgent();
-/*
-const s3Client = new S3Client({
+export const agent = new ProxyAgent();
+
+export const s3Client = new S3Client({
   region: config.region,
   requestHandler: new NodeHttpHandler({ httpAgent: agent, httpsAgent: agent }),
 });
-*/
+
 /** トレーナーの一覧の取得 */
 export const findTrainers = async () => {
   const objects = await s3Client.send(

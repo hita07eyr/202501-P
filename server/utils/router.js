@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { 
-  deleteTrainer,
+import {
   findTrainers,
-  upsertTrainer,
   findTrainer,
- } from "~/server/utils/trainer";
+  upsertTrainer,
+  deleteTrainer,
+} from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
 import { findTenkis,findTenkiCode,findTenkiCodes,findTenki,deletetenkiCode} from "~/server/utils/tenki";
 
