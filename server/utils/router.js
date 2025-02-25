@@ -6,7 +6,7 @@ import {
   deleteTrainer,
 } from "~/server/utils/trainer";
 import { findPokemon } from "~/server/utils/pokemon";
-import { findTenkis,findTenkiCode,findTenkiCodes,findTenki,deletetenkiCode} from "~/server/utils/tenki";
+import { findTenkis,findTenkiCode,findTenkiCodes,deletetenkiCode} from "~/server/utils/tenki";
 
 const router = Router();
 
@@ -139,31 +139,8 @@ router.delete(
 /** 大阪の天気取得 */
 router.get("/o-tenki", async (_req, res, next) => {
   try {
-
     const tenkis = await findTenkis();
-
-    // 必要な情報を抽出
-    const response = tenkis.map(({ publishingOffice, timeSeries }) => {
-      if (timeSeries && timeSeries.length > 0 && timeSeries[0].areas && timeSeries[0].areas.length > 0) {
-        const areaInfo = timeSeries[0].areas[0].area?.name || "N/A";
-        const timeInfo = timeSeries[0].timeDefines?.[0] || "N/A";
-        const weatherInfo = timeSeries[0].areas[0].weathers?.[0] || "N/A";
-        return {
-          publishingOffice,
-          area: areaInfo,
-          time: timeInfo,
-          weather: weatherInfo
-        };
-      } else {
-        return {
-          publishingOffice,
-          area: "N/A",
-          time: "N/A",
-          weather: "N/A"
-        };
-      }
-    });
-    res.send(response[0]);
+    res.send(tenkis);
   } catch (err) {
     next(err);
   }
@@ -199,7 +176,6 @@ router.get("/Code/:tenkiCode", async (req, res, next) => {
   try {
     const { tenkiCode } = req.params;
     //console.log("リクエストされた天気コード:", tenkiCode); // 確認用ログ
-    const tenkiData = await findTenki(tenkiCode);
     const tenkiCodeData = await findTenkiCode(tenkiCode);
 
     if (!tenkiCodeData) {
@@ -215,7 +191,7 @@ router.get("/Code/:tenkiCode", async (req, res, next) => {
 router.delete("/Code/:tenkiCode", async (req, res, next) => {
   try {
     const { tenkiCode } = req.params;
-    console.log("削除要望するリクエストコード:", tenkiCode); // 確認用ログ
+    //console.log("削除要望するリクエストコード:", tenkiCode); // 確認用ログ
     const result = await deletetenkiCode(tenkiCode);
     res.status(result["$metadata"].httpStatusCode).send(result);
   } catch (err) {

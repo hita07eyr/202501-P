@@ -24,11 +24,11 @@ const { dialog, onOpen, onClose } = useDialog();
 <template>
   <div>
     <h1>あたらしくはじめる</h1>
-    <P>では　はじめに　きみの　なまえを　おしえて　もらおう！！</P>
+    <p>では　はじめに　きみの　なまえを　おしえて　もらおう！！</p>
     <form @submit.prevent>
       <div class="item">
-        <P>なまえ</P>
-        <P>とくていの　もじは　とりのぞかれるぞ！</P>
+        <p>なまえ</p>
+        <p>とくていの　もじは　とりのぞかれるぞ！</p>
 
 
         <input

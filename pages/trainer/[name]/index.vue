@@ -72,8 +72,8 @@ const {
       <img src="/avatar.png" />
       <span>{{ trainer.name }}</span>
     </div>
-    <GamifyButton @click="onOpenDelete(true)"
-      >ポケモン集めをやめる</GamifyButton>
+    <CatchButton @click="onOpenDelete(true)"
+      >ポケモン集めをやめる</CatchButton>
     
     <CatchButton :to="`/trainer`"
     >今日のポケモン集めは終了</CatchButton>

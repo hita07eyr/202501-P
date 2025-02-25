@@ -6,22 +6,9 @@ const config = useRuntimeConfig();
 
 /** 大阪の天気情報取得 */
 export const findTenkis = async () => {
-  const tenki = await ofetch(`https://www.jma.go.jp/bosai/forecast/data/forecast/270000.json`, {
-  //const tenki = await ofetch(`http://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json`, {
-    https:
-    agent,
-  });
+  const tenki = await ofetch(`http://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json`);
   return tenki;
 };
-
-/** 天気情報取得 */
-export const findTenki = async (name) => {
-  const tenki = await ofetch(`https://www.jma.go.jp/bosai/forecast/data/forecast/${name}.json`, {
-  agent,
-  });
-  return tenki;
-};
-
 
 /** 天気コードの追加更新 */
 export const upsertTenkiCode = async (name) => {

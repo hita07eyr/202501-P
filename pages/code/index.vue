@@ -1,7 +1,5 @@
 <script setup>
 const { data: codes } = await useTenkiCodes();
-console.log('取得した天気コード:', codes);  // レスポンスを確認
-
 const router = useRouter();
 const config = useRuntimeConfig();
 const CodeName = ref("");
@@ -32,6 +30,11 @@ const valid = computed(() => {
   );
 });
 
+const messages = [
+  "コードを入力してください",
+  "（100000～450000）※ 10000単位に限定",
+  "＜例＞群馬県：100000、東京都：130000、宮崎県：450000"
+];
 
 </script>
 
@@ -47,9 +50,9 @@ const valid = computed(() => {
     <h2>登録地点追加</h2>
     <form @submit.prevent>
       <div class="item">
-        <P>コードを入力してください</P>
-        <P>（100000～450000）※ 10000単位に限定</P>
-        <P>＜例＞群馬県：100000、東京都：130000、宮崎県：450000</P>
+        <div v-for="(text, index) in messages" :key="index">
+          <p>{{ text }}</p>
+        </div>
         <input
           id="name"
           v-model="CodeName"
